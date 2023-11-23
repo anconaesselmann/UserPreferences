@@ -73,6 +73,16 @@ public class UserPreferences<Key>
         }
     }
 
+    public func reset<Value>(key: Key, for type: Value.Type) throws 
+        where Value: PreferenceValue
+    {
+        let oldValue = try store.get(key, for: Value.self)
+        store.clearValue(for: key)
+        if oldValue != nil {
+            change.send(.init(key: key, oldValue: oldValue, newValue: nil))
+        }
+    }
+
     public func reset(except excluded: [Key]) {
         let keys = Key.allCases.filter {
             !excluded.contains($0)
