@@ -14,10 +14,11 @@ public class PreferencesObserver: ObservableObject {
         observe(preferences)
     }
 
-    @MainActor
     public func observe<Key>(_ preferences: UserPreferences<Key>) {
         bag = preferences.change.sink { change in
-            self.objectWillChange.send()
+            Task { @MainActor in
+                self.objectWillChange.send()
+            }
         }
     }
 }
