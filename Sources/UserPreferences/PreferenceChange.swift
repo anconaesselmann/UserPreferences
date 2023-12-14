@@ -4,7 +4,7 @@
 import Foundation
 
 public struct PreferenceChange {
-    var key: any PreferenceKey
-    var oldValue: (any PreferenceValue)?
-    var newValue: (any PreferenceValue)?
+    public var key: any PreferenceKey
+    public var oldValue: (any PreferenceValue)?
+    public var newValue: (any PreferenceValue)?
 }
