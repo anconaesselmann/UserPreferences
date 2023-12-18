@@ -16,8 +16,8 @@ public class PreferencesObserver: ObservableObject {
 
     public func observe<Key>(_ preferences: UserPreferences<Key>) {
         bag = preferences.change.sink { change in
-            Task { @MainActor in
-                self.objectWillChange.send()
+            Task { @MainActor [weak self] in
+                self?.objectWillChange.send()
             }
         }
     }
