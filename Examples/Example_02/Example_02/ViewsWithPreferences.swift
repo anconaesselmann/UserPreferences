@@ -34,17 +34,7 @@ struct SetAView: View {
             ForEach(0..<10, id: \.self) { index in
                 Toggle(
                     "\(index) is \(set.contains(index) ? "set" : "not set")",
-                    isOn: Binding(
-                        get: {
-                            set.contains(index)
-                        }, set: {
-                            if $0 {
-                                set.insert(index)
-                            } else {
-                                set.remove(index)
-                            }
-                        }
-                    )
+                    isOn: _set[isSet: index]
                 )
             }
         }
