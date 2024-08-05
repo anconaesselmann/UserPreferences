@@ -3,7 +3,6 @@
 
 import Foundation
 import SwiftUI
-import Combine
 
 @propertyWrapper
 public struct UserPreference<Key, Value>: DynamicProperty
@@ -48,54 +47,5 @@ public struct UserPreference<Key, Value>: DynamicProperty
 
     public func reset() {
         vm.reset()
-    }
-}
-
-@MainActor
-final internal class UserPreferenceWrapperModel<Key, Value>: ObservableObject
-    where
-        Key: UserPreferenceKey,
-        Key.RawValue == String,
-        Value: PreferenceValue
-{
-    private let key: Key
-    private let defaultValue: Value
-    private var store: UserPreferences<Key>?
-
-    private var subscription: AnyCancellable?
-
-    internal var value: Value {
-        get {
-            store?[key] ?? defaultValue
-        }
-        set {
-            store?[key] = newValue
-        }
-    }
-
-    internal func update(store: UserPreferences<Key>) {
-        guard self.store == nil else {
-            return
-        }
-        self.store = store
-        subscription = store.hasUpdated.eraseToAnyPublisher()
-            .filter { [weak self] in
-                ($0.rawValue as? String) == self?.key.rawValue
-            }
-            .sink { _ in
-                self.objectWillChange.send()
-            }
-    }
-
-    internal init(
-        key: Key,
-        defaultValue: Value
-    ) {
-        self.key = key
-        self.defaultValue = defaultValue
-    }
-
-    internal func reset() {
-        store?.reset(keys: [key])
     }
 }
