@@ -11,11 +11,7 @@ struct ShowAView: View {
 
     var body: some View {
         VStack {
-            if aIsOn {
-                Text("On")
-            } else {
-                Text("Off")
-            }
+            Text(aIsOn ? "On" : "Off")
         }
         .padding()
         .background(Color.random)
@@ -46,10 +42,8 @@ struct ShowBView: View {
 
     var body: some View {
         VStack {
-            if bIsOn {
-                Text("On")
-            } else {
-                Text("Off")
+            VStack {
+                Text(bIsOn ? "On" : "Off")
             }
         }
         .padding()
