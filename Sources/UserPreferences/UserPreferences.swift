@@ -5,8 +5,8 @@ import Foundation
 import Combine
 
 @MainActor
-public class UserPreferences<Key>
-    where Key: PreferenceKey
+public class UserPreferences<Key>: ObservableObject
+    where Key: UserPreferenceKey
 {
 
     public enum Error: Swift.Error {
@@ -18,7 +18,7 @@ public class UserPreferences<Key>
 
     private var store: PreferencesStoreProtocol
 
-    public init(_ store: PreferencesStoreProtocol) {
+    public init(_ store: PreferencesStoreProtocol = UserDefaultsPreferencesStore.shared) {
         self.store = store
     }
 

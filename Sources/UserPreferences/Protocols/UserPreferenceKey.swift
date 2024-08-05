@@ -3,6 +3,6 @@
 
 import Foundation
 
-public protocol PreferenceKey: CaseIterable, Hashable, RawRepresentable
+public protocol UserPreferenceKey: CaseIterable, Hashable, RawRepresentable
     where Self.RawValue == String
 { }
