@@ -1,6 +1,6 @@
 # UserPreferences
 
-UserPreferences is an alternative to SwiftUI's @AppStorage
+`UserPreferences` is an alternative to SwiftUI's `@AppStorage`
 
 ## Author
 
@@ -8,7 +8,7 @@ Axel Ancona Esselmann, axel@anconaesselmann.com
 
 ## License
 
-UserPreferences is available under the MIT license. See the LICENSE file for more info.
+`UserPreferences` is available under the MIT license. See the LICENSE file for more info.
 
 
 ## Motivation
@@ -78,4 +78,4 @@ struct AnotherView: View {
 
 Only views that toggle or read from `aIsOn` will update if `aIsOn` changes.
 
-Example 2 and 3 show how we can use `Set`s and `Array`s to group like preferences.
+[Example 2](https://github.com/anconaesselmann/UserPreferences/tree/main/Examples/Example_02) and [Example 3](https://github.com/anconaesselmann/UserPreferences/tree/main/Examples/Example_03) show how we can use `Set`s and `Array`s to group like preferences.
