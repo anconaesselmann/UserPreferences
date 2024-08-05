@@ -79,3 +79,5 @@ struct AnotherView: View {
 Only views that toggle or read from `aIsOn` will update if `aIsOn` changes.
 
 [Example 2](https://github.com/anconaesselmann/UserPreferences/tree/main/Examples/Example_02) and [Example 3](https://github.com/anconaesselmann/UserPreferences/tree/main/Examples/Example_03) show how we can use `Set`s and `Array`s to group like preferences.
+
+[Example 4](https://github.com/anconaesselmann/UserPreferences/tree/main/Examples/Example_04) shows how to use `PublishedUserPreference` to work with preferences inside a ViewModel
