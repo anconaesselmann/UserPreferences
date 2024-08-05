@@ -45,6 +45,10 @@ public struct UserPreference<Key, Value>: DynamicProperty
             )
         )
     }
+
+    public func reset() {
+        vm.reset()
+    }
 }
 
 @MainActor
@@ -74,9 +78,9 @@ final internal class UserPreferenceWrapperModel<Key, Value>: ObservableObject
             return
         }
         self.store = store
-        subscription = store.change.eraseToAnyPublisher()
+        subscription = store.hasUpdated.eraseToAnyPublisher()
             .filter { [weak self] in
-                ($0.key.rawValue as? String) == self?.key.rawValue
+                ($0.rawValue as? String) == self?.key.rawValue
             }
             .sink { _ in
                 self.objectWillChange.send()
@@ -89,5 +93,9 @@ final internal class UserPreferenceWrapperModel<Key, Value>: ObservableObject
     ) {
         self.key = key
         self.defaultValue = defaultValue
+    }
+
+    internal func reset() {
+        store?.reset(keys: [key])
     }
 }

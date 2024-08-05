@@ -27,6 +27,9 @@ struct SetAView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
+            Button("clear") {
+                _array.reset()
+            }
             ForEach(0...array.count, id: \.self) { index in
                 HStack {
                     Button("", systemImage: "trash.fill") {

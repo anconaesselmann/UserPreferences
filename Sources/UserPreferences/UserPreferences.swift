@@ -14,6 +14,7 @@ public class UserPreferences<Key>: ObservableObject
     }
 
     public let change = PassthroughSubject<PreferenceChange, Never>()
+    public let hasUpdated = PassthroughSubject<Key, Never>()
     public let errors = PassthroughSubject<Error, Never>()
 
     private var store: PreferencesStoreProtocol
@@ -53,6 +54,7 @@ public class UserPreferences<Key>: ObservableObject
                 try store.store(newValue, for: key)
                 if !equal(oldValue, newValue) {
                     change.send(.init(key: key, oldValue: oldValue, newValue: newValue))
+                    hasUpdated.send(key)
                 }
             } catch {
                 errors.send(.storeError(error))
@@ -64,12 +66,14 @@ public class UserPreferences<Key>: ObservableObject
     public func resetAll() {
         for key in Key.allCases {
             store.clearValue(for: key)
+            hasUpdated.send(key)
         }
     }
 
     public func reset(keys: [Key]) {
         for key in keys {
             store.clearValue(for: key)
+            hasUpdated.send(key)
         }
     }
 
@@ -80,6 +84,7 @@ public class UserPreferences<Key>: ObservableObject
         store.clearValue(for: key)
         if oldValue != nil {
             change.send(.init(key: key, oldValue: oldValue, newValue: nil))
+            hasUpdated.send(key)
         }
     }
 
