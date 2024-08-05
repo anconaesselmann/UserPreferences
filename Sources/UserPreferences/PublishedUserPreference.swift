@@ -39,6 +39,17 @@ public struct PublishedUserPreference<Key, Value>: DynamicProperty
         )
     }
 
+    public init(
+        wrappedValue defaultValue: Value,
+        _ key: Key,
+        _ store: UserPreferences<Key>
+    ) {
+        vm = UserPreferenceWrapperModel(
+            key: key, defaultValue: defaultValue
+        )
+        vm.update(store: store)
+    }
+
     public func reset() {
         vm.reset()
     }
