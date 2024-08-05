@@ -9,6 +9,7 @@ import Combine
 public struct UserPreference<Key, Value>: DynamicProperty
     where
         Key: UserPreferenceKey,
+        Key.RawValue == String,
         Value: PreferenceValue
 {
     @StateObject
@@ -50,6 +51,7 @@ public struct UserPreference<Key, Value>: DynamicProperty
 final internal class UserPreferenceWrapperModel<Key, Value>: ObservableObject
     where
         Key: UserPreferenceKey,
+        Key.RawValue == String,
         Value: PreferenceValue
 {
     private let key: Key
@@ -74,7 +76,7 @@ final internal class UserPreferenceWrapperModel<Key, Value>: ObservableObject
         self.store = store
         subscription = store.change.eraseToAnyPublisher()
             .filter { [weak self] in
-                $0.key.rawValue == self?.key.rawValue
+                ($0.key.rawValue as? String) == self?.key.rawValue
             }
             .sink { _ in
                 self.objectWillChange.send()

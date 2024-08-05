@@ -3,6 +3,4 @@
 
 import Foundation
 
-public protocol UserPreferenceKey: CaseIterable, Hashable, RawRepresentable
-    where Self.RawValue == String
-{ }
+public typealias UserPreferenceKey = CaseIterable & Hashable & RawRepresentable

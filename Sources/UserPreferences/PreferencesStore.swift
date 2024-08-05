@@ -5,17 +5,19 @@ import Foundation
 
 @MainActor
 public struct UserDefaultsPreferencesStore: PreferencesStoreProtocol {
-
+    
     public static let shared = UserDefaultsPreferencesStore()
-
+    
     private let userDefaults = UserDefaults.standard
-
+    
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
-
+    
     private init() { }
-
-    public func store(_ value: (any PreferenceValue)?, for key: any UserPreferenceKey) throws {
+    
+    public func store<Key>(_ value: (any PreferenceValue)?, for key: Key) throws
+        where Key: UserPreferenceKey, Key.RawValue == String
+    {
         guard let value = value else {
             userDefaults.removeObject(forKey: key.rawValue)
             return
@@ -24,8 +26,8 @@ public struct UserDefaultsPreferencesStore: PreferencesStoreProtocol {
         userDefaults.setValue(data, forKey: key.rawValue)
     }
 
-    public func get<Value>(_ key: any UserPreferenceKey, for type: Value.Type) throws -> Value?
-        where Value: PreferenceValue
+    public func get<Key, Value>(_ key: Key, for type: Value.Type) throws -> Value?
+        where Value: PreferenceValue, Key: UserPreferenceKey, Key.RawValue == String
     {
         guard let data = userDefaults.data(forKey: key.rawValue) else {
             return nil
@@ -33,7 +35,9 @@ public struct UserDefaultsPreferencesStore: PreferencesStoreProtocol {
         return try decoder.decode(Value.self, from: data)
     }
 
-    public func clearValue(for key: any UserPreferenceKey) {
+    public func clearValue<Key>(for key: Key)
+        where Key: UserPreferenceKey, Key.RawValue == String
+    {
         userDefaults.removeObject(forKey: key.rawValue)
     }
 }

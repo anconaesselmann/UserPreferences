@@ -5,12 +5,14 @@ import Foundation
 
 public protocol PreferencesStoreProtocol {
     @MainActor
-    func store(_ value: (any PreferenceValue)?, for key: any UserPreferenceKey) throws
+    func store<Key>(_ value: (any PreferenceValue)?, for key: Key) throws
+        where Key: UserPreferenceKey, Key.RawValue == String
 
     @MainActor
-    func get<Value>(_ key: any UserPreferenceKey, for type: Value.Type) throws -> Value?
-        where Value: PreferenceValue
+    func get<Key, Value>(_ key: Key, for type: Value.Type) throws -> Value?
+        where Value: PreferenceValue, Key: UserPreferenceKey, Key.RawValue == String
 
     @MainActor
-    func clearValue(for key: any UserPreferenceKey)
+    func clearValue<Key>(for key: Key)
+        where Key: UserPreferenceKey, Key.RawValue == String
 }

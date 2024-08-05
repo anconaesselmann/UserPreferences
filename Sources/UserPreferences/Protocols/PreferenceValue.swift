@@ -3,4 +3,4 @@
 
 import Foundation
 
-public protocol PreferenceValue: Codable, Equatable { }
+public typealias PreferenceValue = Codable & Equatable

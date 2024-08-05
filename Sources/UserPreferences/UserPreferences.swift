@@ -6,7 +6,7 @@ import Combine
 
 @MainActor
 public class UserPreferences<Key>: ObservableObject
-    where Key: UserPreferenceKey
+    where Key: UserPreferenceKey, Key.RawValue == String
 {
 
     public enum Error: Swift.Error {
