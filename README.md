@@ -29,7 +29,7 @@ We inject our user preference store implementation into the view environment:
 
 ```swift
 @main
-struct Example_01App: App {
+struct OurApp: App {
 
     @StateObject
     var preferences = UserPreferences<ExampleKey>()
@@ -77,3 +77,5 @@ struct AnotherView: View {
 ```
 
 Only views that toggle or read from `aIsOn` will update if `aIsOn` changes.
+
+Example 2 and 3 show how we can use `Set`s and `Array`s to group like preferences.
