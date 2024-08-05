@@ -53,5 +53,6 @@ final internal class UserPreferenceWrapperModel<Key, Value>: ObservableObject
 
     internal func reset() {
         store?.reset(keys: [key])
+        onUpdate?()
     }
 }
